@@ -10,7 +10,8 @@ import {
 } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { GetTodoFilterDto } from './dto/get-todo-filter.dto';
-import { Todo, TodoStatus } from './todo.model';
+import { UpdateTodoStatusDto } from './dto/update-todo-status.dto';
+import { Todo } from './todo.model';
 import { TodoService } from './todo.service';
 
 @Controller('todos')
@@ -20,7 +21,7 @@ export class TodoController {
   @Get()
   getTodos(@Query() getTodoFilterDto: GetTodoFilterDto): Todo[] {
     if (Object.keys(getTodoFilterDto).length) {
-      return this.todoService.getTodoWithFilter(getTodoFilterDto)
+      return this.todoService.getTodoWithFilter(getTodoFilterDto);
     }
     return this.todoService.getTodos();
   }
@@ -33,8 +34,9 @@ export class TodoController {
   @Patch('/:id/status')
   updateTodoStatusById(
     @Param('id') id: string,
-    @Body() status: TodoStatus,
+    @Body() updateTodoStatusDto: UpdateTodoStatusDto,
   ): void {
+    const { status } = updateTodoStatusDto;
     this.todoService.updateTodoStatusById(id, status);
   }
 
