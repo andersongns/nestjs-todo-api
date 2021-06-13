@@ -11,7 +11,7 @@ import {
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { GetTodoFilterDto } from './dto/get-todo-filter.dto';
 import { UpdateTodoStatusDto } from './dto/update-todo-status.dto';
-import { Todo } from './todo.model';
+import { Todo } from './todo.entity';
 import { TodoService } from './todo.service';
 
 @Controller('todos')
@@ -19,15 +19,12 @@ export class TodoController {
   constructor(private todoService: TodoService) {}
 
   @Get()
-  getTodos(@Query() getTodoFilterDto: GetTodoFilterDto): Todo[] {
-    if (Object.keys(getTodoFilterDto).length) {
-      return this.todoService.getTodoWithFilter(getTodoFilterDto);
-    }
-    return this.todoService.getTodos();
+  getTodos(@Query() getTodoFilterDto: GetTodoFilterDto): Promise<Todo[]> {
+    return this.todoService.getTodos(getTodoFilterDto);
   }
 
   @Get('/:id')
-  getTodoById(@Param('id') id: string): Todo {
+  getTodoById(@Param('id') id: string): Promise<Todo> {
     return this.todoService.getTodoById(id);
   }
 
@@ -35,18 +32,18 @@ export class TodoController {
   updateTodoStatusById(
     @Param('id') id: string,
     @Body() updateTodoStatusDto: UpdateTodoStatusDto,
-  ): void {
+  ): Promise<Todo> {
     const { status } = updateTodoStatusDto;
-    this.todoService.updateTodoStatusById(id, status);
+    return this.todoService.updateTodoStatusById(id, status);
   }
 
   @Post()
-  create(@Body() createTodoDto: CreateTodoDto): Todo {
+  create(@Body() createTodoDto: CreateTodoDto): Promise<Todo> {
     return this.todoService.create(createTodoDto);
   }
 
   @Delete('/:id')
-  deleteById(@Param('id') id: string): void {
-    this.todoService.deleteById(id);
+  deleteById(@Param('id') id: string): Promise<void> {
+    return this.todoService.deleteById(id);
   }
 }
