@@ -33,10 +33,14 @@ export class AuthService {
 
   async signIn(authCredentialsDto: AuthCredentialsDto): Promise<AuthDto> {
     const { username, password } = authCredentialsDto;
+    
     const user = await this.userRepository.findOne({ username });
+    if (!user) throw new UnauthorizedException();
     const isValidPassword = await bcrypt.compare(password, user.password);
-    if (user && !isValidPassword) throw new UnauthorizedException();
+    
+    if (!isValidPassword) throw new UnauthorizedException();
     const payload: AuthPayloadDto = { username };
+    
     const token = await this.jwtService.sign(payload);
     const result: AuthDto = { token };
     return result;

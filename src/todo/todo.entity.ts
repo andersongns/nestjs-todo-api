@@ -1,7 +1,10 @@
+import { Exclude } from 'class-transformer';
+import { User } from 'src/user/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -25,4 +28,8 @@ export class Todo {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @ManyToOne(() => User, (user) => user.todos, { eager: false })
+  @Exclude({ toPlainOnly: true })
+  user: User;
 }
