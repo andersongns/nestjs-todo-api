@@ -6,7 +6,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'todos' })
 export class Todo {
   @PrimaryGeneratedColumn('uuid')
   id: string;

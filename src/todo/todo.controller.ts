@@ -1,3 +1,4 @@
+import { UseGuards } from '@nestjs/common';
 import {
   Body,
   Controller,
@@ -8,6 +9,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { GetTodoFilterDto } from './dto/get-todo-filter.dto';
 import { UpdateTodoStatusDto } from './dto/update-todo-status.dto';
@@ -15,6 +17,7 @@ import { Todo } from './todo.entity';
 import { TodoService } from './todo.service';
 
 @Controller('todos')
+@UseGuards(AuthGuard())
 export class TodoController {
   constructor(private todoService: TodoService) {}
 

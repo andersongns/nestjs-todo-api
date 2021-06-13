@@ -19,11 +19,11 @@ export class TodoRepository extends Repository<Todo> {
 
   async getTodos(getTodoFilterDto: GetTodoFilterDto): Promise<Todo[]> {
     const { status, search } = getTodoFilterDto;
-    const query = this.createQueryBuilder('todo');
-    if (status) query.andWhere('todo.status = :status', { status });
+    const query = this.createQueryBuilder('todos');
+    if (status) query.andWhere('todos.status = :status', { status });
     if (search)
       query.andWhere(
-        'LOWER(todo.title) LIKE LOWER(:search) or LOWER(todo.description) LIKE LOWER(:search) ',
+        '( LOWER(todos.title) LIKE LOWER(:search) or LOWER(todos.description) LIKE LOWER(:search) )',
         { search: `%${search}%` },
       );
     const todos = await query.getMany();

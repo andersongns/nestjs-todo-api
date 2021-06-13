@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TodoModule } from './todo/todo.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         rejectUnauthorized: false,
       },
     }),
+    AuthModule,
+    UserModule,
   ],
   controllers: [],
   providers: [],
