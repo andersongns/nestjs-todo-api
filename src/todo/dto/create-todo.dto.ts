@@ -1,8 +1,9 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty } from 'class-validator'
 
 export class CreateTodoDto {
   @IsNotEmpty()
-  title: string;
+  title: string
+
   @IsNotEmpty()
-  description: string;
+  description: string
 }

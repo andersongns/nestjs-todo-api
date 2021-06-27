@@ -1,17 +1,17 @@
-import { Module } from '@nestjs/common';
-import { TodoModule } from './todo/todo.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModule } from './auth/auth.module';
-import { UserModule } from './user/user.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { configValidationSchema } from './config.schema';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
+import { Module } from '@nestjs/common'
+import { TodoModule } from './todo/todo.module'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { AuthModule } from './auth/auth.module'
+import { UserModule } from './user/user.module'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { configValidationSchema } from './config.schema'
+import { ServeStaticModule } from '@nestjs/serve-static'
+import { join } from 'path'
 
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
+      rootPath: join(__dirname, '..', 'public')
     }),
     ConfigModule.forRoot({
       isGlobal: true,
@@ -31,16 +31,16 @@ import { join } from 'path';
           autoLoadEntities: true,
           synchronize: true,
           ssl: {
-            rejectUnauthorized: false,
-          },
+            rejectUnauthorized: false
+          }
         }
       }
     }),
     TodoModule,
     AuthModule,
-    UserModule,
+    UserModule
   ],
   controllers: [],
-  providers: [],
+  providers: []
 })
 export class AppModule {}

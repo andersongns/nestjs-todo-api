@@ -1,7 +1,7 @@
 export class AuthPayloadDto {
-    username: string;
+  username: string
 }
 
 export class AuthDto {
-    token: string;
+  token: string
 }

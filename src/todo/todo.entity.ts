@@ -1,35 +1,35 @@
-import { Exclude } from 'class-transformer';
-import { User } from 'src/user/user.entity';
+import { Exclude } from 'class-transformer'
+import { User } from '../user/user.entity'
 import {
   Column,
   CreateDateColumn,
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+  UpdateDateColumn
+} from 'typeorm'
 
 @Entity({ name: 'todos' })
 export class Todo {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id: string
 
   @Column()
-  title: string;
+  title: string
 
   @Column()
-  description: string;
+  description: string
 
   @Column()
-  status: string;
+  status: string
 
   @CreateDateColumn()
-  created_at: Date;
+  created_at: Date
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updated_at: Date
 
   @ManyToOne(() => User, (user) => user.todos, { eager: false })
   @Exclude({ toPlainOnly: true })
-  user: User;
+  user: User
 }
